@@ -73,7 +73,7 @@ LINK_TO_DATABASE: Final = SettingsJSON.get(var_name="LINK_TO_DATABASE", prompt=(
 ))
 
 logging.basicConfig(
-    level=logging.INFO, filename=f"Bot.log", encoding="UTF-8",
+    level=logging.INFO, filename=f"AdministrationNN_SatisfactionRating_Bot.log", encoding="UTF-8",
     datefmt=DATETIME_FORMAT, format="\n'%(name)s':\n%(levelname)s %(asctime)s --> %(message)s",
 )
 logging.getLogger('aiogram').setLevel(logging.ERROR)
