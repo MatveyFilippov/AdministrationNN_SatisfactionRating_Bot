@@ -1,3 +1,3 @@
 from . import (
-    user,
+    user, survey, question_answer,
 )

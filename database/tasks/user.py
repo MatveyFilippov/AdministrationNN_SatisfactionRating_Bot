@@ -22,7 +22,7 @@ def write_or_rewrite_user(tg_peer_id: int, full_name: str):
 
 def get_user(tg_peer_id: int, raise_error_if_not_exists=True) -> User | None:
     with Session() as session:
-        return _get_user(session, tg_peer_id, raise_error_if_not_exists)
+        return _get_user(session=session, tg_peer_id=tg_peer_id, raise_error_if_not_exists=raise_error_if_not_exists)
 
 
 def get_all_users() -> list[User]:
