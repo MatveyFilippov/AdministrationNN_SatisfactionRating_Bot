@@ -8,23 +8,23 @@ from aiogram.types import (
 from aiogram.utils import exceptions as aiogram_exceptions
 from io import IOBase
 import logging
-from typing import Awaitable, Callable
+from typing import Callable
 
 
 class CallbackChecker(Filter):
-    def __init__(self, checker: Callable[[CallbackQuery], Awaitable[bool]]):
+    def __init__(self, checker: Callable[[CallbackQuery], bool]):
         self.__checker = checker
 
     async def check(self, callback: CallbackQuery) -> bool:
-        return await self.__checker(callback)
+        return self.__checker(callback)
 
 
 class MessageChecker(Filter):
-    def __init__(self, checker: Callable[[Message], Awaitable[bool]]):
+    def __init__(self, checker: Callable[[Message], bool]):
         self.__checker = checker
 
     async def check(self, message: Message) -> bool:
-        return await self.__checker(message)
+        return self.__checker(message)
 
 
 async def send_message_to_admins(text: str, kb: InlineKeyboardMarkup | None = None):

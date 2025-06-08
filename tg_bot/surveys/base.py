@@ -88,5 +88,9 @@ class Surveys(NamedTuple):
         )
 
     @classmethod
-    def get(cls, survey_id: int):
+    def get(cls, survey_id: int) -> 'Surveys':
         return cls.__SURVEYS[survey_id]
+
+    @classmethod
+    def get_all(cls) -> list['Surveys']:
+        return list(cls.__SURVEYS.values())

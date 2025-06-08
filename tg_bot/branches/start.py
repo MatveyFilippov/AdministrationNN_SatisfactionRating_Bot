@@ -1,6 +1,7 @@
 from ..base import DP
 from ..surveys.utils import start_survey
 import database.tasks as db
+import settings
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State
 from aiogram.types import Message, ContentType
@@ -28,7 +29,11 @@ async def start(message: Message, state: FSMContext):
         survey_id = int(message.get_args())
     except ValueError:
         await message.answer(
-            text="Чтоб пользоваться ботом, Вы должны перейти по <u>специальной ссылке на опрос</u>", parse_mode="HTML",
+            parse_mode="HTML", text=(
+                "Чтоб пользоваться ботом, Вы должны перейти по <u>специальной ссылке на опрос</u>"
+                if message.from_user.id not in settings.BOT_ADMIN_IDs else
+                "Доступные команды:\n\n/users - просмотр пользователей и результатов их опросов\n/surveys - пригласительные ссылки на прохождение опроса"
+            ),
         )
         return
     if not db.user.is_user_exists(message.from_user.id):

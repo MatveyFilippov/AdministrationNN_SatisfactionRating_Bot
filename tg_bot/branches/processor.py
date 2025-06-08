@@ -1,4 +1,5 @@
 from ..base import DP
+from ..global_tools import send_documents
 from ..surveys import Question, FREE_ANSWER
 from ..surveys.utils import get_survey_description, get_survey_csv_bytesio
 import database.tasks as db
@@ -36,10 +37,8 @@ async def processor(message: Message, state: FSMContext):
             "Вопросов больше нет. Спасибо за уделённое время ❣️", reply_markup=ReplyKeyboardRemove(),
         )
         await asyncio.sleep(3.5)
-        await message.answer_document(
-            document=InputFile(get_survey_csv_bytesio(survey_id)),
-            caption=get_survey_description(survey_id),
-            parse_mode="HTML",
+        await send_documents(
+            get_survey_csv_bytesio(survey_id), chat_id=message.from_user.id, text=get_survey_description(survey_id),
         )
     else:
         await next_question.send(message.from_user.id)
