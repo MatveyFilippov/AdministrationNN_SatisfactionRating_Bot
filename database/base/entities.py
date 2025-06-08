@@ -10,6 +10,7 @@ class User(Base):
 
     tg_peer_id = Column(sqlalchemy.BigInteger, primary_key=True)
     full_name = Column(sqlalchemy.Text, nullable=False)
+    department = Column(sqlalchemy.Text, nullable=False)
     registered_at = Column(sqlalchemy.DateTime(True), nullable=False, default=lambda: datetime.now(settings.BOT_TIMEZONE))
 
     @property

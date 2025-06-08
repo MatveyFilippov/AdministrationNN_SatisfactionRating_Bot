@@ -9,15 +9,15 @@ def _get_user(session: Session, tg_peer_id: int, raise_error_if_not_exists=False
     return user
 
 
-def write_or_rewrite_user(tg_peer_id: int, full_name: str):
+def write_user(tg_peer_id: int, full_name: str, department: str):
     with Session() as session:
-        user = _get_user(session, tg_peer_id)
-        if user and user.full_name != full_name:
-            user.full_name = full_name
-            session.commit()
-        elif not user:
-            session.add(User(tg_peer_id=tg_peer_id, full_name=full_name))
-            session.commit()
+        session.add(User(tg_peer_id=tg_peer_id, full_name=full_name, department=department))
+        session.commit()
+
+
+def is_user_exists(tg_peer_id: int) -> bool:
+    with Session() as session:
+        return _get_user(session=session, tg_peer_id=tg_peer_id, raise_error_if_not_exists=False) is not None
 
 
 def get_user(tg_peer_id: int, raise_error_if_not_exists=True) -> User | None:

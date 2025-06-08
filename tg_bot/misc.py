@@ -21,7 +21,7 @@ async def on_shutdown(dispatcher):
 @DP.edited_message_handler(state="*")
 async def handle_edited_message(message: Message):
     await message.reply("""🚫Вы внесли изменения, а, к сожалению, в нашем боте <b>НЕ ПРЕДУСМОТРЕНА</b> такая функция(
-    \nПолучатель <b>НЕ УВИДИТ</b> ваших изменений. 💬Лучше отправьте ещё одно сообщение""", parse_mode="HTML")
+    \nПолучатель <b>НЕ УВИДИТ</b> Ваших изменений. 💬Лучше отправьте ещё одно сообщение""", parse_mode="HTML")
 
 
 @DP.callback_query_handler(CallbackChecker(lambda c: c.data.startswith("delete_message")), state="*")
@@ -44,7 +44,7 @@ async def unknown_callback(callback: CallbackQuery):
 
 @DP.message_handler(content_types=ContentType.ANY, state="*")
 async def another_message(message: Message):
-    await message.reply(text="Извините, я не понял ваш запрос 😔", parse_mode="HTML")
+    await message.reply(text="Извините, я не понял Ваш запрос 😔", parse_mode="HTML")
 
 
 @DP.errors_handler()
