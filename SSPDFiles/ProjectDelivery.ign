@@ -1,0 +1,22 @@
+# List files and folders to ignore during SSH/SCP project delivery
+# The system will only work with files in the local project folder specified in config
+# Supported patterns:
+# - Lines starting with '#' are comments and will be ignored
+# - Lines ending with '/' indicate folders - all files within will be ignored
+# - Lines starting with '/' represent absolute file or folder paths to ignore
+# - Other lines are treated as keywords - any filepath containing the keyword (when split by '/' or '\') will be ignored
+
+# For example:
+/SSPDFiles/
+.git/
+.gitignore
+/venv/
+/.idea/
+__pycache__/
+.DS_Store
+/README.md
+
+/AdministrationNN_SatisfactionRating_Bot.log
+/AdministrationNN_SatisfactionRating_Bot.db
+/playground.py
+/sspd_main.py
