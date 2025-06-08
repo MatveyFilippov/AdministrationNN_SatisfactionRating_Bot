@@ -29,7 +29,7 @@ async def start_survey(user_tg_peer_id: int, survey_id: int, state: FSMContext):
 def get_survey_csv_bytesio(survey_id: int) -> io.IOBase:
     csv_buffer = io.StringIO()
 
-    fieldnames = ["question", "answer"]
+    fieldnames = ["Вопрос", "Ответ"]
     writer = csv.DictWriter(csv_buffer, fieldnames=fieldnames)
     writer.writeheader()
 
@@ -43,7 +43,7 @@ def get_survey_csv_bytesio(survey_id: int) -> io.IOBase:
 
     bytes_io = io.BytesIO(csv_buffer.getvalue().encode("utf-8"))
     bytes_io.seek(0)
-    bytes_io.name = f"Survey_{survey_id}.csv"
+    bytes_io.name = f"Опрос_{survey_id}.csv"
     return bytes_io
 
 
