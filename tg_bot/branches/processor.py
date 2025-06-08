@@ -1,8 +1,10 @@
 from ..base import DP
 from ..surveys import Question, FREE_ANSWER
+from ..surveys.utils import get_survey_description, get_survey_csv_bytesio
 import database.tasks as db
 from aiogram.dispatcher import FSMContext
-from aiogram.types import Message, ContentType, ReplyKeyboardRemove
+from aiogram.types import Message, ContentType, ReplyKeyboardRemove, InputFile
+import asyncio
 
 
 @DP.message_handler(state=Question.STATES, content_types=ContentType.ANY)
@@ -29,9 +31,15 @@ async def processor(message: Message, state: FSMContext):
         answer=message.text,
     )
     if not next_question:
-        await message.reply(
-            "Это был завершающий вопрос. Спасибо за уделённое время ❣️", reply_markup=ReplyKeyboardRemove(),
-        )
         await state.finish()
+        await message.answer(
+            "Вопросов больше нет. Спасибо за уделённое время ❣️", reply_markup=ReplyKeyboardRemove(),
+        )
+        await asyncio.sleep(3.5)
+        await message.answer_document(
+            document=InputFile(get_survey_csv_bytesio(survey_id)),
+            caption=get_survey_description(survey_id),
+            parse_mode="HTML",
+        )
     else:
         await next_question.send(message.from_user.id)
