@@ -115,7 +115,7 @@ a = Question(
     }
 )
 Surveys.register(
-    name="?ЗАМЕНИТЬ ИМЯ?",
+    name="HR",
     survey_id=3,
     first_question=a,
 )
