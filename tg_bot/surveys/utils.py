@@ -52,7 +52,7 @@ def get_survey_description(survey_id: int) -> str:
     user = db.user.get_user(survey.respondent_tg_peer_id)
     return (
         f"<u>Опрос</u>:\n'{survey.name}'\n\n<u>Дата начала</u>:"
-        f"\n{survey.start_at.strftime(settings.DATETIME_FORMAT)} ({settings.BOT_TIMEZONE.zone})"
+        f"\n{survey.start_at.strftime(settings.DATETIME_FORMAT)} ({settings.BOT_TIMEZONE_ABBREVIATION})"
         f"\n\n<u>Респондент</u>:\n<a href='{user.bot_link_to_user}'>{user.full_name}</a> ({user.department})"
         f"\n\n<u>ID</u>:\n<code>{survey.id}</code>"
     )

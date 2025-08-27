@@ -127,12 +127,12 @@ async def look_user(callback: CallbackQuery):
     all_surveys.reverse()
     try:
         last_survey = all_surveys[0]
-        last_survey_date_str = f"{last_survey.start_at.strftime(settings.DATETIME_FORMAT)} ({settings.BOT_TIMEZONE.zone})"
+        last_survey_date_str = f"{last_survey.start_at.strftime(settings.DATETIME_FORMAT)} ({settings.BOT_TIMEZONE_ABBREVIATION})"
     except IndexError:
         last_survey_date_str = "Ещё не проходил(а)"
 
     text = f"""<a href='{user.bot_link_to_user}'>{user.full_name}</a>
-    \n<u>Дата регистрации</u>:\n{user.registered_at.strftime(settings.DATETIME_FORMAT)} ({settings.BOT_TIMEZONE.zone})
+    \n<u>Дата регистрации</u>:\n{user.registered_at.strftime(settings.DATETIME_FORMAT)} ({settings.BOT_TIMEZONE_ABBREVIATION})
     \n<u>Отдел</u>: {user.department}
     \n<u>Всего пройдено опросов</u>: {len(all_surveys)}
     \n<u>Дата прохождения последнего опроса</u>:\n{last_survey_date_str}

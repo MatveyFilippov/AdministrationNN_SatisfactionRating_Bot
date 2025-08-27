@@ -53,11 +53,12 @@ async def error_handler(update: Update, exception: Exception):
     error_text = "".join(traceback.format_exception(type(exception), exception, exception.__traceback__))
     tb = traceback.extract_tb(exception.__traceback__)
     logging.error(f"{type(exception).__name__} in '{tb[-1].name}'", exc_info=True)
+
     try:
         await BOT.send_message(
             chat_id=update.message.chat.id, parse_mode="HTML", disable_notification=True,
             text=(
-                f"{err_time} ({settings.BOT_TIMEZONE.zone}) --- <b>ERROR</b>"
+                f"{err_time} ({settings.BOT_TIMEZONE_ABBREVIATION}) --- <b>ERROR</b>"
                 "\nПередал информацию об ошибке разработчикам, попробуйте позже"
             ),
         )
@@ -71,7 +72,7 @@ async def error_handler(update: Update, exception: Exception):
         text = "Ошибка от пользователя, который перестал пользоваться ботом"
 
     await send_message_to_admins((
-        f"{err_time} ({settings.BOT_TIMEZONE.zone})"
+        f"{err_time} ({settings.BOT_TIMEZONE_ABBREVIATION})"
         f"\nПроизошла ошибка <b>{type(exception).__name__}</b> в функции {tb[-1].name}"
     ))
     await send_message_to_admins(text + f"\n\n<code>{error_text}</code>")
