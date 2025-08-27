@@ -7,8 +7,8 @@ import os
 class Direction(Enum):
     EXIT = 0
     UPDATE_CODE = auto()
-    DOWNLOAD_LOGS = auto()
-    DOWNLOAD_DATABASE = auto()
+    DOWNLOAD_LOG_FILE = auto()
+    DOWNLOAD_DATABASE_FILE = auto()
     STOP_RUNNING = auto()
     START_RUNNING = auto()
 
@@ -25,10 +25,24 @@ class Direction(Enum):
             return cls.EXIT
 
 
-def download_database():
+def download_database_file():
+    remote_db_file_path = sspd.base.tilda_replacer(sspd.base.config.get_required_value(
+        section="RemoteMachine", option="REMOTE_DB_FILE_PATH"
+    ))
+    local_db_file_path_to_download_in = sspd.base.config.get_required_value(
+        section="LocalMachine", option="LOCAL_DB_FILE_PATH_TO_DOWNLOAD_IN"
+    )
+
+    if not os.path.exists(local_db_file_path_to_download_in):
+        os.makedirs(os.path.dirname(local_db_file_path_to_download_in), exist_ok=True)
+    else:
+        print(f"File '{local_db_file_path_to_download_in}' already exists")
+        sign2continue = "Y"
+        if input(f"Can I rewrite it ({sign2continue}/n): ").strip() != sign2continue:
+            return
+
     sspd.tasks.download_file_from_remote_server(
-        remote_filepath=sspd.base.REMOTE_PROJECT_DIR_PATH + "/AdministrationNN_SatisfactionRating_Bot.db",
-        local_filepath=os.path.join(sspd.base.LOCAL_PROJECT_DIR_PATH, "AdministrationNN_SatisfactionRating_Bot.db")
+        remote_filepath=remote_db_file_path, local_filepath=local_db_file_path_to_download_in
     )
 
 
@@ -37,8 +51,8 @@ HANDLERS = {
     Direction.UPDATE_CODE: sspd.tasks.update_remote_code,
     Direction.START_RUNNING: sspd.tasks.start_running_remote_code,
     Direction.STOP_RUNNING: sspd.tasks.stop_running_remote_code,
-    Direction.DOWNLOAD_LOGS: sspd.tasks.download_log_file,
-    Direction.DOWNLOAD_DATABASE: download_database,
+    Direction.DOWNLOAD_LOG_FILE: sspd.tasks.download_log_file,
+    Direction.DOWNLOAD_DATABASE_FILE: download_database_file,
 }
 
 
